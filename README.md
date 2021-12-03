@@ -3,6 +3,12 @@ Schedules job and sends task to RabbitMQ Queues which is then consumed and the s
 
 ![](architecture.png)
 
+## Cron library 
+
+```
+https://github.com/robfig/cron
+```
+
 ## To run app locally
 
 ```bash
