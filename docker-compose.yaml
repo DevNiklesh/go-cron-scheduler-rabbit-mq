@@ -1,0 +1,28 @@
+services:
+  rabbitmq:
+    image: "rabbitmq:3-management-alpine"
+    ports:
+      - 5672:5672
+      - 15672:15672
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "status"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
+    
+  cronapp:
+    container_name: cronapp
+    build:
+      context: .
+      dockerfile: cron.Dockerfile
+    env_file:
+      - .env
+    tty: true
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+
+networks:
+    default:
+        name: cron-rabbitmq-network
